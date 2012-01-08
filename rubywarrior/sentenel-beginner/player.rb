@@ -76,6 +76,14 @@ class Player
     @warrior.send(name, *args)
   end
 
+  def next_enemy
+    look.each do |space|
+      return space.to_s if space.enemy?
+      return nil unless space.empty?
+    end
+    return nil
+  end
+
   def taking_damage?
     health < @last_health
   end
