@@ -84,6 +84,15 @@ class Player
     return nil
   end
 
+  def path_to_stairs_is_clear?
+    if !enemy_ahead?
+      look.each do |space|
+        return true if space.stairs?
+      end
+    end
+    false
+  end
+
   def taking_damage?
     health < @last_health
   end
@@ -105,7 +114,7 @@ class Player
       combat_actions!
     elsif feel.wall?
       turn_around!
-    elsif feel.stairs?
+    elsif path_to_stairs_is_clear?
       walk!
     elsif health < 10 && !taking_damage?
       rest!
